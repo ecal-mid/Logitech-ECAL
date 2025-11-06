@@ -16,15 +16,13 @@
 #include "your_secrets.h"
 #include <Preferences.h>
 
+#define WIFI_SSID "ECALEVENT" // Wifi name
+#define WIFI_PASS "papyrus"   // Wifi password
 
-#define WIFI_SSID "studio" // Wifi name
-#define WIFI_PASS "g64HgXG3ngE7PxXaYo" // Wifi password
-
-
-WiFiUDP Udp;                                // A UDP instance to let us send and receive packets over UDP
-IPAddress outIp(192, 168, 1, 14);            // remote IP of your computer (to send OSC messages)
-int outPort = 8888;                         // remote port to send OSC messages
-const unsigned int localPort = 8000;        // local port to listen for OSC messages
+WiFiUDP Udp;                         // A UDP instance to let us send and receive packets over UDP
+IPAddress outIp(192, 168, 1, 14);    // remote IP of your computer (to send OSC messages)
+int outPort = 8888;                  // remote port to send OSC messages
+const unsigned int localPort = 8000; // local port to listen for OSC messages
 bool authorisedIP = false;
 IPAddress lastOutIp(10, 189, 8, 81);
 char ipAsChar[15];
@@ -50,8 +48,8 @@ int32_t value_1 = 0;
 /* Server for IP table update */
 HTTPClient httpclient;
 
-
-void setup() {
+void setup()
+{
   Serial.begin(115200);
   delay(1000);
   Serial.println("");
@@ -67,8 +65,8 @@ void setup() {
   updateIpTable();
 }
 
-
-void loop() {
+void loop()
+{
 
   /* --------- SEND OSC MSGS */
 
@@ -76,12 +74,14 @@ void loop() {
   // read the state of the pushbutton value:
   buttonState = digitalRead(buttonPin);
 
-  if (buttonState != buttonLastState) {
+  if (buttonState != buttonLastState)
+  {
     outSendValues();
     buttonLastState = buttonState;
   }
 
-  if (millis() - lastSentMillis > sendDelayInMillis) {
+  if (millis() - lastSentMillis > sendDelayInMillis)
+  {
     lastSentMillis = millis();
     value_1 = value_1 + 1;
     // send values regularely
@@ -91,11 +91,14 @@ void loop() {
   /* --------- CHECK INCOMMING OSC MSGS */
   OSCMessage msg;
   int size = Udp.parsePacket();
-  if (size > 0) {
-    while (size--) {
+  if (size > 0)
+  {
+    while (size--)
+    {
       msg.fill(Udp.read());
     }
-    if (!msg.hasError()) {
+    if (!msg.hasError())
+    {
       msg.dispatch("/hid/move", inHIDMove);
       msg.dispatch("/hid/left_down", inHIDLeftDown);
       msg.dispatch("/hid/left_up", inHIDLeftUp);
@@ -104,7 +107,9 @@ void loop() {
       msg.dispatch("/hid/middle_down", inHIDMiddleDown);
       msg.dispatch("/hid/middle_up", inHIDMiddleUp);
       msg.dispatch("/hid/scroll", inHIDScroll);
-    } else {
+    }
+    else
+    {
       error = msg.getError();
       Serial.print("error: ");
       Serial.println(error);
@@ -114,9 +119,9 @@ void loop() {
 
 /* --------- FUNCTIONS ------------ */
 
-
 /* --------- OUTGOING OSC COMMANDS FUNCTIONS ------------ */
-void outSendValues() { // in button, encoder
+void outSendValues()
+{ // in button, encoder
   OSCMessage msg("/ESP32/state/");
   msg.add(value_1);
   msg.add(buttonState);
@@ -125,23 +130,25 @@ void outSendValues() { // in button, encoder
   Udp.endPacket();
   msg.empty();
   Serial.println("message sent /ESP32/state/");
-  delay (10);
+  delay(10);
 }
 
 /* --------- INCOMMING OSC COMMANDS FUNCTIONS ------------ */
 
-void inBegin(OSCMessage &msg) { // no value required
- Serial.println("Begin message received");
+void inBegin(OSCMessage &msg)
+{ // no value required
+  Serial.println("Begin message received");
 }
 
-void inSetValue(OSCMessage &msg) { // int value 
+void inSetValue(OSCMessage &msg)
+{ // int value
   float val = msg.getFloat(0);
   Serial.print("/arduino/value: ");
-  Serial.println(val*100);
+  Serial.println(val * 100);
 }
 
-
-void inConnect(OSCMessage &msg) { // string value "ip:port"
+void inConnect(OSCMessage &msg)
+{ // string value "ip:port"
   /*lastKeepAliveReceived = millis();
   clientConnected = true;
   char newIpAndPort[20];
@@ -161,51 +168,59 @@ void inConnect(OSCMessage &msg) { // string value "ip:port"
   Serial.println(outPort);*/
 }
 
-void inRestartESP(OSCMessage &msg) { // no value needed
+void inRestartESP(OSCMessage &msg)
+{ // no value needed
   restartESP();
 }
 
 /* --------- HID INCOMMING OSC MESSAGES FUNCTIONS ------------ */
 
-void inHIDLeftDown(OSCMessage &msg) { // no value required
+void inHIDLeftDown(OSCMessage &msg)
+{ // no value required
   int deviceID = msg.getInt(0);
   internalLed(1);
   Serial.print("/hid/left_down: ");
   Serial.println(deviceID);
 }
 
-void inHIDLeftUp(OSCMessage &msg) { // no value required
+void inHIDLeftUp(OSCMessage &msg)
+{ // no value required
   int deviceID = msg.getInt(0);
   internalLed(0);
   Serial.print("/hid/left_up: ");
   Serial.println(deviceID);
 }
 
-void inHIDRightDown(OSCMessage &msg) { // no value required
+void inHIDRightDown(OSCMessage &msg)
+{ // no value required
   int deviceID = msg.getInt(0);
   Serial.print("/hid/right_down: ");
   Serial.println(deviceID);
 }
 
-void inHIDRightUp(OSCMessage &msg) { // no value required
+void inHIDRightUp(OSCMessage &msg)
+{ // no value required
   int deviceID = msg.getInt(0);
   Serial.print("/hid/right_up: ");
   Serial.println(deviceID);
 }
 
-void inHIDMiddleDown(OSCMessage &msg) { // no value required
+void inHIDMiddleDown(OSCMessage &msg)
+{ // no value required
   int deviceID = msg.getInt(0);
   Serial.print("/hid/middle_down: ");
   Serial.println(deviceID);
 }
 
-void inHIDMiddleUp(OSCMessage &msg) { // no value required
+void inHIDMiddleUp(OSCMessage &msg)
+{ // no value required
   int deviceID = msg.getInt(0);
   Serial.print("/hid/middle_up: ");
   Serial.println(deviceID);
 }
 
-void inHIDMove(OSCMessage &msg) { // int values x, y
+void inHIDMove(OSCMessage &msg)
+{ // int values x, y
   int deviceID = msg.getInt(0);
   float dx = msg.getFloat(3);
   float dy = msg.getFloat(4);
@@ -217,7 +232,8 @@ void inHIDMove(OSCMessage &msg) { // int values x, y
   Serial.println(dy);
 }
 
-void inHIDScroll(OSCMessage &msg) { // int value
+void inHIDScroll(OSCMessage &msg)
+{ // int value
   int deviceID = msg.getInt(0);
   float scrollx = msg.getFloat(3);
   float scrolly = msg.getFloat(4);
@@ -231,17 +247,22 @@ void inHIDScroll(OSCMessage &msg) { // int value
 
 /* --------- YOUR CUSTOM FUNCTIONS ------------ */
 
-void internalLed(int state) {
-  if (state == 1) {
+void internalLed(int state)
+{
+  if (state == 1)
+  {
     digitalWrite(LED_BUILTIN, HIGH);
-  } else {
+  }
+  else
+  {
     digitalWrite(LED_BUILTIN, LOW);
   }
 }
 
 /* --------- OTHER FUNCTIONS ------------ */
 
-void startWifiAndUdp() {
+void startWifiAndUdp()
+{
   // Connect to WiFi network
   Serial.println();
   Serial.println();
@@ -249,7 +270,8 @@ void startWifiAndUdp() {
   Serial.println(WIFI_SSID);
   WiFi.begin(WIFI_SSID, WIFI_PASS);
   int tryCount = 0;
-  while (WiFi.status() != WL_CONNECTED) {
+  while (WiFi.status() != WL_CONNECTED)
+  {
     delay(500);
     Serial.print(".");
   }
@@ -259,7 +281,8 @@ void startWifiAndUdp() {
   Serial.println(WiFi.localIP());
   // Start UDP
   Serial.println("Starting UDP");
-  if (!Udp.begin(localPort)) {
+  if (!Udp.begin(localPort))
+  {
     Serial.println("Error starting UDP");
     return;
   }
@@ -269,14 +292,17 @@ void startWifiAndUdp() {
   Serial.println(outIp);
 }
 
-void updateIpTable() {
+void updateIpTable()
+{
   httpclient.begin("https://ecal-mid.ch/esp32watcher/update.php?name=" + boardName + "&ip=" + WiFi.localIP().toString() + "&wifi=" + WIFI_SSID);
   int httpResponseCode = httpclient.GET();
-  if (httpResponseCode > 0) {
+  if (httpResponseCode > 0)
+  {
     String payload = httpclient.getString();
     Serial.println(payload);
   }
-  else {
+  else
+  {
     Serial.print("Error code: ");
     Serial.println(httpResponseCode);
   }
@@ -284,7 +310,8 @@ void updateIpTable() {
   httpclient.end();
 }
 
-void restartESP() {
+void restartESP()
+{
   Serial.print("Restarting now");
   ESP.restart();
 }
