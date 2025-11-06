@@ -56,6 +56,17 @@ npm install
 npm start
 ```
 
+## Download
+
+You can download the latest release from the [GitHub Releases page](https://github.com/yourusername/Logitech-ECAL/releases/latest).
+
+### Latest Release
+
+- **Mouse Event Dispatcher**: [Download DMG](https://github.com/yourusername/Logitech-ECAL/releases/latest/download/MouseOSCDispatcher-v1.0.0.dmg) | [Download ZIP](https://github.com/yourusername/Logitech-ECAL/releases/latest/download/MouseOSCDispatcher-v1.0.0.zip)
+- **Keyboard Event Dispatcher**: [Download DMG](https://github.com/yourusername/Logitech-ECAL/releases/latest/download/KeyboardOSCDispatcher-v1.0.0.dmg) | [Download ZIP](https://github.com/yourusername/Logitech-ECAL/releases/latest/download/KeyboardOSCDispatcher-v1.0.0.zip)
+
+> **Note**: You'll need to replace "yourusername" with your actual GitHub username and update version numbers as needed.
+
 ## Requirements
 
 - macOS 10.15 or later

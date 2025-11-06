@@ -1,0 +1,115 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Set up Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      
+      - name: Extract version from tag
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+      
+      - name: Build Mouse Event Dispatcher
+        run: |
+          cd software/Mouse-Event-Dispatcher-UI
+          chmod +x build_all.sh
+          ./build_all.sh
+      
+      - name: Build Keyboard Event Dispatcher
+        run: |
+          cd software/Keyboard-Event-Dispatcher-UI
+          chmod +x build_all.sh
+          ./build_all.sh
+      
+      - name: Rename release files
+        run: |
+          mkdir -p release
+          cp software/Mouse-Event-Dispatcher-UI/build/release/MouseOSCDispatcher.dmg release/MouseOSCDispatcher-v${{ env.VERSION }}.dmg
+          cp software/Keyboard-Event-Dispatcher-UI/build/release/KeyboardOSCDispatcher.dmg release/KeyboardOSCDispatcher-v${{ env.VERSION }}.dmg
+          cp software/Mouse-Event-Dispatcher-UI/build/release/MouseOSCDispatcher.zip release/MouseOSCDispatcher-v${{ env.VERSION }}.zip
+          cp software/Keyboard-Event-Dispatcher-UI/build/release/KeyboardOSCDispatcher.zip release/KeyboardOSCDispatcher-v${{ env.VERSION }}.zip
+      
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: HID Event Dispatchers ${{ github.ref_name }}
+          draft: true
+          prerelease: false
+          body: |
+            # HID Event Dispatchers ${{ github.ref_name }}
+            
+            This release includes both the Mouse and Keyboard Event Dispatcher applications.
+            
+            ## Mouse Event Dispatcher
+            
+            ### Features
+            - Captures mouse movement, clicks, and scroll events
+            - Sends events via OSC with configurable host/port
+            - Rate limiting for mouse movement events
+            
+            ## Keyboard Event Dispatcher
+            
+            ### Features
+            - Captures key down, key up, and modifier key events
+            - Configurable event filtering
+            - Sends events via OSC with configurable host/port
+            
+            ## System Requirements
+            - macOS 10.15 or later
+            - Accessibility permissions must be granted for both applications
+      
+      - name: Upload Mouse Event Dispatcher DMG
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./release/MouseOSCDispatcher-v${{ env.VERSION }}.dmg
+          asset_name: MouseOSCDispatcher-v${{ env.VERSION }}.dmg
+          asset_content_type: application/x-apple-diskimage
+      
+      - name: Upload Keyboard Event Dispatcher DMG
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./release/KeyboardOSCDispatcher-v${{ env.VERSION }}.dmg
+          asset_name: KeyboardOSCDispatcher-v${{ env.VERSION }}.dmg
+          asset_content_type: application/x-apple-diskimage
+      
+      - name: Upload Mouse Event Dispatcher ZIP
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./release/MouseOSCDispatcher-v${{ env.VERSION }}.zip
+          asset_name: MouseOSCDispatcher-v${{ env.VERSION }}.zip
+          asset_content_type: application/zip
+      
+      - name: Upload Keyboard Event Dispatcher ZIP
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./release/KeyboardOSCDispatcher-v${{ env.VERSION }}.zip
+          asset_name: KeyboardOSCDispatcher-v${{ env.VERSION }}.zip
+          asset_content_type: application/zip

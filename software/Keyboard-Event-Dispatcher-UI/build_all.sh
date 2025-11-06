@@ -160,27 +160,9 @@ rm -rf build/release/dmg_contents
 mkdir -p build/release/dmg_contents
 cp -R build/release/${APP_DIR_NAME}.app build/release/dmg_contents/
 
-# Create a README file for the DMG
-cat > build/release/dmg_contents/IMPORTANT_READ_ME.txt << EOF
-$APP_NAME
-ECAL / Alain Bellet 2025
-
-This application captures keyboard events and can send them via OSC protocol.
-It requires accessibility permissions to function properly.
-
-INSTALLATION:
-1. Drag the application to your Applications folder
-2. When you first run the app, right-click on it and select "Open"
-3. Grant accessibility permissions when prompted
-
-USAGE:
-- The app will appear in your menu bar with a keyboard icon
-- Click the icon to show/hide the main window
-- Configure OSC settings as needed
-- You can block events from specific keyboard devices
-
-For more information, visit: https://www.ecal.ch
-EOF
+# Copy the README file for the DMG
+echo "Copying IMPORTANT_READ_ME.txt to DMG contents..."
+cp IMPORTANT_READ_ME.txt build/release/dmg_contents/
 
 # Create a helper script to remove quarantine
 cat > build/release/dmg_contents/remove_quarantine.command << EOF
