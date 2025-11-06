@@ -1,90 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WebSocket Client Example</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <div class="container">
-    <header>
-      <h1>WebSocket Client Example</h1>
-      <p>Connecting to Node HID Server</p>
-    </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebSocket Client Example</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>WebSocket Client Example</h1>
+        <p>Connecting to Node HID Server</p>
+      </header>
 
-    <main>
-      <div class="card">
-        <div class="connection-status">
-          <h2>Connection Status</h2>
-          <div class="status-indicator">
-            <span id="status-text">Disconnected</span>
-            <span id="status-dot" class="status-dot"></span>
-          </div>
-          <div class="connection-controls">
-            <input type="text" id="server-url" value="ws://localhost:3000" placeholder="WebSocket server URL">
-            <button id="connect-button" class="btn primary">Connect</button>
-            <button id="disconnect-button" class="btn danger" disabled>Disconnect</button>
+      <main>
+        <div class="card">
+          <div class="connection-status">
+            <h2>Connection Status</h2>
+            <div class="status-indicator">
+              <span id="status-text">Disconnected</span>
+              <span id="status-dot" class="status-dot"></span>
+            </div>
+            <div class="connection-controls">
+              <input
+                type="text"
+                id="server-url"
+                value="ws://localhost:3000"
+                placeholder="WebSocket server URL"
+              />
+              <button id="connect-button" class="btn primary">Connect</button>
+              <button id="disconnect-button" class="btn danger" disabled>
+                Disconnect
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="card">
-        <h2>Event Visualization</h2>
-        <div class="visualization-container">
-          <div id="visualization-area">
-            <div class="pointer" id="pointer"></div>
-          </div>
-          <div class="coordinates">
-            <span>X: <span id="x-coord">0</span></span>
-            <span>Y: <span id="y-coord">0</span></span>
+        <div class="card">
+          <h2>Event Visualization</h2>
+          <div class="visualization-container">
+            <div id="visualization-area">
+              <div class="pointer" id="pointer"></div>
+            </div>
+            <div class="coordinates">
+              <span>X: <span id="x-coord">0</span></span>
+              <span>Y: <span id="y-coord">0</span></span>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="card">
-        <h2>Message Log</h2>
-        <div class="message-container">
-          <div id="message-log"></div>
-        </div>
-        <div class="controls-row">
-          <button id="clear-log" class="btn secondary">Clear Log</button>
-          <span class="message-count">Showing last <span id="message-count">50</span> messages</span>
-        </div>
-      </div>
-
-      <div class="card">
-        <h2>Event Filter</h2>
-        <div class="filter-controls">
-          <div class="checkbox-group">
-            <input type="checkbox" id="filter-move" checked>
-            <label for="filter-move">Mouse Move</label>
+        <div class="card">
+          <h2>Message Log</h2>
+          <div class="message-container">
+            <div id="message-log"></div>
           </div>
-          <div class="checkbox-group">
-            <input type="checkbox" id="filter-click" checked>
-            <label for="filter-click">Mouse Click</label>
-          </div>
-          <div class="checkbox-group">
-            <input type="checkbox" id="filter-scroll" checked>
-            <label for="filter-scroll">Scroll</label>
-          </div>
-          <div class="checkbox-group">
-            <input type="checkbox" id="filter-keyboard" checked>
-            <label for="filter-keyboard">Keyboard</label>
-          </div>
-          <div class="checkbox-group">
-            <input type="checkbox" id="filter-other" checked>
-            <label for="filter-other">Other Events</label>
+          <div class="controls-row">
+            <button id="clear-log" class="btn secondary">Clear Log</button>
+            <span class="message-count"
+              >Showing last <span id="message-count">50</span> messages</span
+            >
           </div>
         </div>
-      </div>
-    </main>
 
-    <footer>
-      <p>WebSocket Client Example for Logitech-ECAL Project &copy; 2025</p>
-    </footer>
-  </div>
+        <div class="card">
+          <h2>Event Filter</h2>
+          <div class="filter-controls">
+            <div class="checkbox-group">
+              <input type="checkbox" id="filter-move" checked />
+              <label for="filter-move">Mouse Move</label>
+            </div>
+            <div class="checkbox-group">
+              <input type="checkbox" id="filter-click" checked />
+              <label for="filter-click">Mouse Click</label>
+            </div>
+            <div class="checkbox-group">
+              <input type="checkbox" id="filter-scroll" checked />
+              <label for="filter-scroll">Scroll</label>
+            </div>
+            <div class="checkbox-group">
+              <input type="checkbox" id="filter-keyboard" checked />
+              <label for="filter-keyboard">Keyboard</label>
+            </div>
+            <div class="checkbox-group">
+              <input type="checkbox" id="filter-other" checked />
+              <label for="filter-other">Other Events</label>
+            </div>
+          </div>
+        </div>
+      </main>
 
-  <script src="app.js"></script>
-</body>
+      <footer>
+        <p>WebSocket Client Example for Logitech-ECAL Project &copy; 2025</p>
+      </footer>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
 </html>

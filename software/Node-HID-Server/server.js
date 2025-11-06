@@ -27,12 +27,12 @@ let config = {
   enabled: false,
   filters: {
     enabled: false,
-    patterns: ['/hid/*'] // Default filter pattern
+    patterns: ['/hid/*'], // Default filter pattern
   },
   logging: {
     enabled: false,
-    consoleOutput: false
-  }
+    consoleOutput: false,
+  },
 };
 
 // Load configuration if exists
@@ -70,7 +70,11 @@ function logOSCMessage(message) {
   // Only log to console if console logging is enabled
   if (config.logging && config.logging.consoleOutput) {
     const timestamp = new Date(message.timestamp).toISOString();
-    console.log(`OSC: [${timestamp}] ${message.address} ${JSON.stringify(message.args)} from ${message.source}`);
+    console.log(
+      `OSC: [${timestamp}] ${message.address} ${JSON.stringify(
+        message.args
+      )} from ${message.source}`
+    );
   }
 }
 
@@ -80,33 +84,33 @@ function shouldForwardMessage(address) {
   if (!config.filters || !config.filters.enabled) {
     return true;
   }
-  
+
   // If no patterns are defined, don't forward any messages
   if (!config.filters.patterns || config.filters.patterns.length === 0) {
     return false;
   }
-  
+
   // Check if the address matches any of the patterns
-  return config.filters.patterns.some(pattern => {
+  return config.filters.patterns.some((pattern) => {
     // Convert OSC-style pattern to regex
     let regexPattern = pattern;
-    
+
     // Handle special case for /** (matches anything including /)
     if (pattern.endsWith('/**')) {
-      regexPattern = pattern.replace(/\/\*\*$/, '(\/.*)?');
+      regexPattern = pattern.replace(/\/\*\*$/, '(/.*)?');
     }
-    
+
     // Replace * with wildcard for any characters except /
     regexPattern = regexPattern.replace(/\*/g, '[^/]*');
-    
+
     // Escape special regex characters except those we've already handled
     regexPattern = regexPattern.replace(/([.+?^${}()|\/])/g, '\\$1');
-    
+
     // Convert OSC-style wildcards to regex
     regexPattern = regexPattern
-      .replace(/\\\*/g, '[^/]*')  // Restore * as wildcard
-      .replace(/\\\//g, '\/');    // Restore / as literal
-    
+      .replace(/\\\*/g, '[^/]*') // Restore * as wildcard
+      .replace(/\\\//g, '/'); // Restore / as literal
+
     const regex = new RegExp(`^${regexPattern}$`);
     return regex.test(address);
   });
@@ -117,45 +121,40 @@ function startOSCServer() {
   if (oscServer) {
     oscServer.close();
   }
-  
+
   // Initialize logger
   initLogger();
-  
+
   oscServer = new OSCServer(config.oscPort, '0.0.0.0');
-  
+
   oscServer.on('message', (msg, rinfo) => {
     if (!msg || !Array.isArray(msg) || msg.length === 0) return;
-    
+
     const address = msg[0];
     const args = msg.slice(1);
-    
+
     // Create message object
     const message = {
       timestamp: Date.now(),
       address,
       args,
-      source: `${rinfo.address}:${rinfo.port}`
+      source: `${rinfo.address}:${rinfo.port}`,
     };
-    
+
     // Log message
     logOSCMessage(message);
-    
-    // Debug log for mouse button events to help diagnose issues
-    if (config.logging && config.logging.consoleOutput && (address.includes('_down') || address.includes('_up'))) {
-      console.log(`DEBUG: Received mouse button event: ${address} with args:`, args);
-    }
-    
+
     // Check if message should be forwarded based on filters
     if (shouldForwardMessage(address)) {
       // Broadcast to all WebSocket clients
-      wss.clients.forEach(client => {
+      wss.clients.forEach((client) => {
         if (client.readyState === WebSocket.OPEN) {
           client.send(JSON.stringify(message));
         }
       });
     }
   });
-  
+
   console.log(`OSC server listening on port ${config.oscPort}`);
 }
 
@@ -171,17 +170,17 @@ function stopOSCServer() {
 
 // Setup WebSocket server
 server.on('upgrade', (request, socket, head) => {
-  wss.handleUpgrade(request, socket, head, ws => {
+  wss.handleUpgrade(request, socket, head, (ws) => {
     wss.emit('connection', ws, request);
   });
 });
 
-wss.on('connection', ws => {
+wss.on('connection', (ws) => {
   console.log('WebSocket client connected');
-  
+
   // Send current configuration to the client
   ws.send(JSON.stringify({ type: 'config', data: config }));
-  
+
   ws.on('close', () => {
     console.log('WebSocket client disconnected');
   });
@@ -192,33 +191,37 @@ app.get('/api/config', (req, res) => {
   res.json(config);
 });
 
-
-
 app.post('/api/config', (req, res) => {
   const newConfig = req.body;
-  
+
   // Update config
-  if (newConfig.oscPort !== undefined) config.oscPort = parseInt(newConfig.oscPort);
-  if (newConfig.webSocketPort !== undefined) config.webSocketPort = parseInt(newConfig.webSocketPort);
-  if (newConfig.webServerPort !== undefined) config.webServerPort = parseInt(newConfig.webServerPort);
+  if (newConfig.oscPort !== undefined)
+    config.oscPort = parseInt(newConfig.oscPort);
+  if (newConfig.webSocketPort !== undefined)
+    config.webSocketPort = parseInt(newConfig.webSocketPort);
+  if (newConfig.webServerPort !== undefined)
+    config.webServerPort = parseInt(newConfig.webServerPort);
   if (newConfig.enabled !== undefined) config.enabled = newConfig.enabled;
-  
+
   // Update filters
   if (newConfig.filters !== undefined) {
-    if (newConfig.filters.enabled !== undefined) config.filters.enabled = newConfig.filters.enabled;
-    if (newConfig.filters.patterns !== undefined) config.filters.patterns = newConfig.filters.patterns;
+    if (newConfig.filters.enabled !== undefined)
+      config.filters.enabled = newConfig.filters.enabled;
+    if (newConfig.filters.patterns !== undefined)
+      config.filters.patterns = newConfig.filters.patterns;
   }
-  
+
   // Update logging settings
   if (newConfig.logging !== undefined) {
-    if (newConfig.logging.enabled !== undefined) config.logging.enabled = newConfig.logging.enabled;
-    if (newConfig.logging.consoleOutput !== undefined) config.logging.consoleOutput = newConfig.logging.consoleOutput;
+    if (newConfig.logging.enabled !== undefined)
+      config.logging.enabled = newConfig.logging.enabled;
+    if (newConfig.logging.consoleOutput !== undefined)
+      config.logging.consoleOutput = newConfig.logging.consoleOutput;
   }
-  
-  
+
   // Save updated config
   saveConfig();
-  
+
   // Restart services if needed
   if (config.enabled) {
     stopOSCServer();
@@ -226,43 +229,47 @@ app.post('/api/config', (req, res) => {
   } else {
     stopOSCServer();
   }
-  
+
   // Notify all clients about config change
-  wss.clients.forEach(client => {
-    if (client.readyState === 1) { // OPEN
+  wss.clients.forEach((client) => {
+    if (client.readyState === 1) {
+      // OPEN
       client.send(JSON.stringify({ type: 'config', data: config }));
     }
   });
-  
+
   res.json({ success: true, config });
 });
 
 app.post('/api/toggle', (req, res) => {
   config.enabled = !config.enabled;
-  
+
   if (config.enabled) {
     startOSCServer();
   } else {
     stopOSCServer();
   }
-  
+
   saveConfig();
-  
+
   // Notify all clients
-  wss.clients.forEach(client => {
-    if (client.readyState === 1) { // OPEN
+  wss.clients.forEach((client) => {
+    if (client.readyState === 1) {
+      // OPEN
       client.send(JSON.stringify({ type: 'config', data: config }));
     }
   });
-  
+
   res.json({ success: true, enabled: config.enabled });
 });
 
 // Start the server
 server.listen(config.webServerPort, () => {
   console.log(`Web server listening on port ${config.webServerPort}`);
-  console.log(`WebSocket server available at ws://localhost:${config.webServerPort}`);
-  
+  console.log(
+    `WebSocket server available at ws://localhost:${config.webServerPort}`
+  );
+
   // Start OSC server if enabled
   if (config.enabled) {
     startOSCServer();
@@ -273,7 +280,7 @@ server.listen(config.webServerPort, () => {
 process.on('SIGINT', () => {
   stopOSCServer();
   wss.close();
-  
+
   server.close(() => {
     console.log('Server shut down');
     process.exit(0);

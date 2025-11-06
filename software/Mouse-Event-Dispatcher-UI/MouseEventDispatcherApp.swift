@@ -451,7 +451,7 @@ struct ContentView: View {
             // Header with controls
             VStack(spacing: 10) {
                 HStack {
-                    Text("HID Event to OSC Dispatcher")
+                    Text("Mouse Event to OSC Dispatcher")
                         .font(.title)
                         .fontWeight(.bold)
                     Spacer()

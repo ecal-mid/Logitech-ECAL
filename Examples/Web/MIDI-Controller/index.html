@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HID to MIDI Controller</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>HID to MIDI Controller</h1>
+        <p>Transform HID events to MIDI messages</p>
+      </header>
+
+      <main>
+        <div class="card">
+          <div class="connection-status">
+            <h2>WebSocket Connection</h2>
+            <div class="status-indicator">
+              <span id="status-text">Disconnected</span>
+              <span id="status-dot" class="status-dot"></span>
+            </div>
+            <div class="connection-controls">
+              <input
+                type="text"
+                id="server-url"
+                value="ws://localhost:3000"
+                placeholder="WebSocket server URL"
+              />
+              <button id="connect-button" class="btn primary">Connect</button>
+              <button id="disconnect-button" class="btn danger" disabled>
+                Disconnect
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>MIDI Output</h2>
+          <div class="midi-status">
+            <div class="status-indicator">
+              <span id="midi-status-text">MIDI not initialized</span>
+              <span id="midi-status-dot" class="status-dot"></span>
+            </div>
+            <button id="midi-init-button" class="btn primary">
+              Initialize MIDI
+            </button>
+          </div>
+          <div class="midi-devices">
+            <label for="midi-output">MIDI Output Device:</label>
+            <select id="midi-output" disabled>
+              <option value="">No devices available</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>MIDI Mapping</h2>
+          <div class="mapping-container">
+            <div class="mapping-group">
+              <h3>Mouse Movement (Delta)</h3>
+              <div class="mapping-row">
+                <label>Sensitivity:</label>
+                <input
+                  type="range"
+                  id="movement-sensitivity"
+                  min="0.1"
+                  max="5"
+                  step="0.1"
+                  value="0.8"
+                />
+                <span class="midi-value" id="sensitivity-value">0.8</span>
+              </div>
+              <div class="mapping-row">
+                <label>X Movement:</label>
+                <select class="midi-mapping" data-event="move-x">
+                  <option value="none">Disabled</option>
+                  <option value="cc" selected>CC Message</option>
+                  <option value="note">Note Velocity</option>
+                </select>
+                <input
+                  type="number"
+                  class="midi-cc-number"
+                  data-event="move-x"
+                  value="1"
+                  min="0"
+                  max="127"
+                />
+                <span class="midi-value" id="move-x-value">0</span>
+              </div>
+              <div class="mapping-row">
+                <label>Y Movement:</label>
+                <select class="midi-mapping" data-event="move-y">
+                  <option value="none">Disabled</option>
+                  <option value="cc" selected>CC Message</option>
+                  <option value="note">Note Velocity</option>
+                </select>
+                <input
+                  type="number"
+                  class="midi-cc-number"
+                  data-event="move-y"
+                  value="2"
+                  min="0"
+                  max="127"
+                />
+                <span class="midi-value" id="move-y-value">0</span>
+              </div>
+            </div>
+
+            <div class="mapping-group">
+              <h3>Mouse Buttons</h3>
+              <div class="mapping-row">
+                <label>Left Button:</label>
+                <select class="midi-mapping" data-event="left-button">
+                  <option value="none">Disabled</option>
+                  <option value="cc">CC Message</option>
+                  <option value="note" selected>Note On/Off</option>
+                </select>
+                <input
+                  type="number"
+                  class="midi-note-number"
+                  data-event="left-button"
+                  value="60"
+                  min="0"
+                  max="127"
+                />
+                <span class="midi-value" id="left-button-value">Off</span>
+              </div>
+              <div class="mapping-row">
+                <label>Right Button:</label>
+                <select class="midi-mapping" data-event="right-button">
+                  <option value="none">Disabled</option>
+                  <option value="cc">CC Message</option>
+                  <option value="note" selected>Note On/Off</option>
+                </select>
+                <input
+                  type="number"
+                  class="midi-note-number"
+                  data-event="right-button"
+                  value="62"
+                  min="0"
+                  max="127"
+                />
+                <span class="midi-value" id="right-button-value">Off</span>
+              </div>
+              <div class="mapping-row">
+                <label>Middle Button:</label>
+                <select class="midi-mapping" data-event="middle-button">
+                  <option value="none">Disabled</option>
+                  <option value="cc">CC Message</option>
+                  <option value="note" selected>Note On/Off</option>
+                </select>
+                <input
+                  type="number"
+                  class="midi-note-number"
+                  data-event="middle-button"
+                  value="64"
+                  min="0"
+                  max="127"
+                />
+                <span class="midi-value" id="middle-button-value">Off</span>
+              </div>
+            </div>
+
+            <div class="mapping-group">
+              <h3>Scroll</h3>
+              <div class="mapping-row">
+                <label>Sensitivity:</label>
+                <input type="range" id="scroll-sensitivity" min="0.1" max="10" step="0.1" value="3">
+                <span class="midi-value" id="scroll-sensitivity-value">3</span>
+              </div>
+              <div class="mapping-row">
+                <label>Scroll Y:</label>
+                <select class="midi-mapping" data-event="scroll-y">
+                  <option value="none">Disabled</option>
+                  <option value="cc" selected>CC Message</option>
+                  <option value="note">Note Velocity</option>
+                </select>
+                <input
+                  type="number"
+                  class="midi-cc-number"
+                  data-event="scroll-y"
+                  value="3"
+                  min="0"
+                  max="127"
+                />
+                <span class="midi-value" id="scroll-y-value">0</span>
+              </div>
+            </div>
+
+            <div class="mapping-group">
+              <h3>Keyboard</h3>
+              <div class="mapping-row">
+                <label>Key Presses:</label>
+                <select class="midi-mapping" data-event="keyboard">
+                  <option value="none">Disabled</option>
+                  <option value="cc">CC Message</option>
+                  <option value="note" selected>Note On/Off</option>
+                </select>
+                <span class="note-range">Base Note: </span>
+                <input
+                  type="number"
+                  class="midi-note-number"
+                  data-event="keyboard"
+                  value="48"
+                  min="0"
+                  max="127"
+                />
+                <span class="midi-value" id="keyboard-value">None</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Message Log</h2>
+          <div class="message-container">
+            <div id="message-log"></div>
+          </div>
+          <div class="controls-row">
+            <button id="clear-log" class="btn secondary">Clear Log</button>
+            <span class="message-count"
+              >Showing last <span id="message-count">10</span> messages</span
+            >
+          </div>
+        </div>
+      </main>
+
+      <footer>
+        <p>
+          HID to MIDI Controller Example for Logitech-ECAL Project &copy; 2025
+        </p>
+      </footer>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -10,6 +10,8 @@
   --card-background: #ffffff;
   --text-color: #1e293b;
   --border-color: #e2e8f0;
+  --midi-color: #8b5cf6;
+  --midi-hover: #7c3aed;
 }
 
 * {
@@ -61,6 +63,12 @@ header p {
   color: var(--text-color);
 }
 
+.card h3 {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  color: var(--text-color);
+}
+
 .status-indicator {
   display: flex;
   align-items: center;
@@ -80,12 +88,13 @@ header p {
   background-color: var(--success-color);
 }
 
-#status-text {
+#status-text, #midi-status-text {
   font-weight: bold;
 }
 
-.connection-status {
+.connection-status, .midi-status {
   text-align: center;
+  margin-bottom: 1rem;
 }
 
 .connection-controls {
@@ -100,14 +109,14 @@ header p {
   min-width: 250px;
 }
 
-input {
+input, select {
   padding: 0.75rem;
   border: 1px solid var(--border-color);
   border-radius: 4px;
   font-size: 1rem;
 }
 
-input:focus {
+input:focus, select:focus {
   outline: none;
   border-color: var(--primary-color);
   box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
@@ -155,8 +164,17 @@ input:focus {
   background-color: #b91c1c;
 }
 
+.btn.midi {
+  background-color: var(--midi-color);
+  color: white;
+}
+
+.btn.midi:hover:not(:disabled) {
+  background-color: var(--midi-hover);
+}
+
 .message-container {
-  height: 300px;
+  height: 200px;
   overflow-y: auto;
   border: 1px solid var(--border-color);
   border-radius: 4px;
@@ -188,6 +206,11 @@ input:focus {
   border-left: 3px solid var(--primary-color);
 }
 
+.message-item.midi-message {
+  background-color: #f5f3ff;
+  border-left: 3px solid var(--midi-color);
+}
+
 .message-address {
   font-weight: bold;
   color: var(--primary-color);
@@ -211,80 +234,67 @@ input:focus {
   font-style: italic;
 }
 
-.checkbox-group {
+.midi-devices {
+  margin-top: 1rem;
   display: flex;
-  align-items: center;
-  margin-bottom: 0.5rem;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-.checkbox-group input[type="checkbox"] {
-  width: auto;
-  margin-right: 10px;
+.midi-devices select {
+  width: 100%;
 }
 
-.checkbox-group label {
-  display: inline;
-  margin-bottom: 0;
-}
-
-.filter-controls {
+.mapping-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-.visualization-container {
+.mapping-group {
   border: 1px solid var(--border-color);
   border-radius: 4px;
   padding: 1rem;
-  margin-bottom: 1rem;
 }
 
-#visualization-area {
-  position: relative;
-  height: 300px;
+.mapping-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.mapping-row:last-child {
+  margin-bottom: 0;
+}
+
+.mapping-row label {
+  width: 100px;
+  font-weight: 500;
+}
+
+.mapping-row select {
+  width: 120px;
+}
+
+.mapping-row input[type="number"] {
+  width: 70px;
+  text-align: center;
+}
+
+.midi-value {
+  display: inline-block;
+  min-width: 40px;
+  padding: 0.25rem 0.5rem;
   background-color: #f1f5f9;
   border-radius: 4px;
-  overflow: hidden;
-}
-
-.pointer {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  background-color: var(--primary-color);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: all 0.05s ease;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-.coordinates {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin-top: 0.5rem;
+  text-align: center;
   font-family: monospace;
-  font-size: 1rem;
 }
 
-.click-animation {
-  animation: click-pulse 0.5s ease-out;
-}
-
-@keyframes click-pulse {
-  0% {
-    transform: translate(-50%, -50%) scale(1);
-    background-color: var(--primary-color);
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.5);
-    background-color: var(--danger-color);
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-    background-color: var(--primary-color);
-  }
+.note-range {
+  font-size: 0.9rem;
 }
 
 footer {

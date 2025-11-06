@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let ws = null;
 
   // Maximum number of messages to display
-  const MAX_MESSAGES = 50;
+  const MAX_MESSAGES = 10;
 
   // Connect to WebSocket server
   function connectToServer() {
@@ -124,42 +124,39 @@ document.addEventListener('DOMContentLoaded', () => {
   function shouldDisplayMessage(message) {
     const address = message.address || '';
 
-    if (address.includes('/move') && !filterMove.checked) {
-      return false;
+    // Filter mouse move events
+    if (address.includes('/move')) {
+      return filterMove.checked;
     }
 
+    // Filter mouse click events
     if (
       address.includes('/left_down') ||
+      address.includes('/left_up') ||
       address.includes('/right_down') ||
-      (address.includes('/middle_down') && !filterClick.checked)
+      address.includes('/right_up') ||
+      address.includes('/middle_down') ||
+      address.includes('/middle_up')
     ) {
-      return false;
+      return filterClick.checked;
     }
 
-    if (address.includes('/scroll') && !filterScroll.checked) {
-      return false;
+    // Filter scroll events
+    if (address.includes('/scroll')) {
+      return filterScroll.checked;
     }
 
-    if (address.includes('/key') && !filterKeyboard.checked) {
-      return false;
-    }
-
-    // If it's not one of the above types, check "Other" filter
+    // Filter keyboard events
     if (
-      !address.includes('/left_down') &&
-      !address.includes('/left_up') &&
-      !address.includes('/right_down') &&
-      !address.includes('/right_up') &&
-      !address.includes('/middle_down') &&
-      !address.includes('/middle_up') &&
-      !address.includes('/scroll') &&
-      !address.includes('/move') &&
-      !filterOther.checked
+      address.includes('/key_up') ||
+      address.includes('/key_down') ||
+      address.includes('/flags_changed')
     ) {
-      return false;
+      return filterKeyboard.checked;
     }
 
-    return true;
+    // For any other type of message
+    return filterOther.checked;
   }
 
   // Add message to log
@@ -172,12 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const messageItem = document.createElement('div');
     messageItem.className = 'message-item';
 
-    messageItem.innerHTML = `
-      <span class="message-timestamp">[${timestamp}]</span>
-      <span class="message-address">${address}</span>
-      <span class="message-args">${args}</span>
-      <span class="message-source">from ${source}</span>
-    `;
+    messageItem.innerHTML = `<span class="message-timestamp">[${timestamp}]</span> <span class="message-address">${address}</span> <span class="message-args">${args}</span> <span class="message-source">from ${source}</span>`;
 
     messageLog.appendChild(messageItem);
 
@@ -188,6 +180,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Auto-scroll to bottom
     messageLog.scrollTop = messageLog.scrollHeight;
+
+    // Update message count display
+    messageCountElement.textContent = MAX_MESSAGES;
   }
 
   // Add system message to log
@@ -195,13 +190,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const timestamp = new Date().toLocaleTimeString();
 
     const messageItem = document.createElement('div');
-    messageItem.className = 'message-item';
+    messageItem.className = 'message-item system-message';
 
-    messageItem.innerHTML = `
-      <span class="message-timestamp">[${timestamp}]</span>
-      <span class="message-address">SYSTEM:</span>
-      <span class="message-args">${text}</span>
-    `;
+    messageItem.innerHTML = `<span class="message-timestamp">[${timestamp}]</span> <span class="message-address">SYSTEM:</span> <span class="message-args">${text}</span>`;
 
     messageLog.appendChild(messageItem);
 
@@ -212,6 +203,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Auto-scroll to bottom
     messageLog.scrollTop = messageLog.scrollHeight;
+
+    // Update message count display
+    messageCountElement.textContent = MAX_MESSAGES;
   }
 
   // Update visualization based on message
