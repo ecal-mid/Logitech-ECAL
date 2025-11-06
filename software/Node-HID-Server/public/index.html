@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Node HID Server</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Node HID Server</h1>
+        <p>OSC to WebSocket Bridge</p>
+      </header>
+
+      <main>
+        <div class="card">
+          <div class="status-container">
+            <h2>Server Status</h2>
+            <div class="status-indicator">
+              <span id="status-text">Disconnected</span>
+              <span id="status-dot" class="status-dot"></span>
+            </div>
+            <button id="toggle-server" class="btn primary">Start Server</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>OSC Message Monitor</h2>
+          <div class="message-container">
+            <div id="message-log"></div>
+          </div>
+          <div class="controls-row">
+            <button id="clear-log" class="btn secondary">Clear Log</button>
+            <span class="message-info">Showing last 10 messages</span>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Configuration</h2>
+          <form id="config-form">
+            <div class="form-group">
+              <label for="osc-port">OSC Port</label>
+              <input
+                type="number"
+                id="osc-port"
+                name="oscPort"
+                min="1024"
+                max="65535"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="websocket-port">WebSocket Port</label>
+              <input
+                type="number"
+                id="websocket-port"
+                name="webSocketPort"
+                min="1024"
+                max="65535"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="webserver-port">Web Server Port</label>
+              <input
+                type="number"
+                id="webserver-port"
+                name="webServerPort"
+                min="1024"
+                max="65535"
+                required
+              />
+            </div>
+            
+            <div class="form-group">
+              <h3>OSC Message Filtering</h3>
+              <div class="checkbox-group">
+                <input type="checkbox" id="filter-enabled" name="filterEnabled" />
+                <label for="filter-enabled">Enable Filtering</label>
+              </div>
+              <p class="help-text">Only forward messages matching the patterns below</p>
+              
+              <div id="filter-patterns">
+                <!-- Filter patterns will be added here dynamically -->
+              </div>
+              
+              <div class="filter-input-group">
+                <input type="text" id="new-filter" placeholder="/hid/*" />
+                <button type="button" id="add-filter" class="btn secondary">Add</button>
+              </div>
+              <p class="help-text">Use * to match any characters except /, use /** to match any characters including /</p>
+            </div>
+
+            <button type="submit" class="btn primary">
+              Save Configuration
+            </button>
+          </form>
+        </div>
+      </main>
+
+      <footer>
+        <p>Node HID Server ECAL / Alain Bellet&copy; 2025</p>
+      </footer>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

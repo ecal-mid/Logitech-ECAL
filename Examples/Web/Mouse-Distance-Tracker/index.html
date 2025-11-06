@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mouse Distance Tracker</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Mouse Distance Tracker</h1>
+        <p>Measures distance traveled during left-button drag operations</p>
+      </header>
+
+      <section class="connection-panel">
+        <div class="status-indicator">
+          <div id="status-dot" class="status-dot"></div>
+          <span id="status-text">Disconnected</span>
+        </div>
+        <div class="connection-form">
+          <input
+            type="text"
+            id="server-url"
+            placeholder="WebSocket Server URL"
+            value="ws://localhost:3000"
+          />
+          <button id="connect-button" class="btn primary">Connect</button>
+          <button id="disconnect-button" class="btn secondary" disabled>
+            Disconnect
+          </button>
+        </div>
+      </section>
+
+      <section class="measurements-section">
+        <div class="section-header">
+          <h2>Drag Measurements</h2>
+          <div class="controls">
+            <button id="export-measurements" class="btn primary">
+              Export CSV
+            </button>
+            <button id="clear-measurements" class="btn secondary">
+              Clear All
+            </button>
+          </div>
+        </div>
+
+        <div id="measurements-container" class="measurements-container">
+          <!-- Measurement cards will be added here dynamically -->
+          <div class="empty-state" id="empty-state">
+            <p>No measurements recorded yet.</p>
+            <p>Left-click and drag to start measuring distances.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="log-section">
+        <div class="log-header">
+          <h2>System Log</h2>
+          <div class="log-controls">
+            <button id="clear-log" class="btn secondary">Clear Log</button>
+          </div>
+        </div>
+        <div id="message-log" class="message-log"></div>
+      </section>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
