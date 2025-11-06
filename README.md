@@ -56,6 +56,27 @@ npm install
 npm start
 ```
 
+## OSC Message Reference
+
+The applications use the following OSC message formats for communication:
+
+### HID Event Messages (Mouse/Keyboard → OSC)
+
+| Address Pattern | Description | Parameters |
+|----------------|-------------|------------|
+| `/hid/move` | Mouse movement | `deviceID` (int), `x` (int), `y` (int), `deltaX` (float), `deltaY` (float) |
+| `/hid/left_down` | Left mouse button down | `deviceID` (int), `x` (int), `y` (int), `pressure` (float), `clickCount` (int) |
+| `/hid/left_up` | Left mouse button up | `deviceID` (int), `x` (int), `y` (int), `pressure` (float), `clickCount` (int) |
+| `/hid/right_down` | Right mouse button down | `deviceID` (int), `x` (int), `y` (int), `pressure` (float), `clickCount` (int) |
+| `/hid/right_up` | Right mouse button up | `deviceID` (int), `x` (int), `y` (int), `pressure` (float), `clickCount` (int) |
+| `/hid/middle_down` | Middle mouse button down | `deviceID` (int), `x` (int), `y` (int), `pressure` (float), `clickCount` (int) |
+| `/hid/middle_up` | Middle mouse button up | `deviceID` (int), `x` (int), `y` (int), `pressure` (float), `clickCount` (int) |
+| `/hid/scroll` | Mouse scroll wheel | `deviceID` (int), `x` (int), `y` (int), `deltaX` (float), `deltaY` (float), `deltaZ` (float) |
+| `/hid/key_down` | Keyboard key down | `deviceID` (int), `keyCode` (int), `characters` (string), `modifiers` (int) |
+| `/hid/key_up` | Keyboard key up | `deviceID` (int), `keyCode` (int), `characters` (string), `modifiers` (int) |
+| `/hid/flags_changed` | Modifier keys changed | `deviceID` (int), `modifiers` (int) |
+
+
 ## Download
 
 You can download the latest release from the [GitHub Releases page](https://github.com/ecal-mid/Logitech-ECAL/releases/latest).
