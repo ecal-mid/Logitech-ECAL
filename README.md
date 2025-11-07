@@ -37,24 +37,32 @@ A Node.js server that receives OSC messages and forwards them via WebSockets.
   - Web interface for configuration and monitoring
   - Message filtering and logging capabilities
 
-## Building the Applications
 
-Each application has its own build script:
+## Examples
 
-```bash
-# For Mouse Event Dispatcher
-cd software/Mouse-Event-Dispatcher-UI
-./build_all.sh
+The repository includes several examples to help you get started with using the HID Event Dispatchers:
 
-# For Keyboard Event Dispatcher
-cd software/Keyboard-Event-Dispatcher-UI
-./build_all.sh
+### Arduino Examples
 
-# For Node HID Server
-cd software/Node-HID-Server
-npm install
-npm start
-```
+Located in `Examples/Arduino/`, these examples demonstrate how to receive OSC messages on an ESP32 microcontroller:
+
+- **LED-Strip-example**: Controls an LED strip based on mouse movements and clicks
+- **OSC-WIFI-RECEIVER**: Basic example for receiving OSC messages over WiFi
+
+These examples show how to:
+
+- Connect to WiFi and receive OSC messages
+- Process different types of HID events (mouse movements, clicks, scrolls)
+- Trigger physical outputs based on these events
+
+### Web Examples
+
+Located in `Examples/Web/`, these examples demonstrate how to use the OSC data in web applications via WebSockets:
+
+- **MIDI-Controller**: Web-based MIDI controller interface
+- **Mouse-Distance-Tracker**: Tracks and visualizes mouse movement distances
+- **Mouse-Sound-Generator**: Generates sounds based on mouse movements
+- **Websocket-client-example**: Basic example of connecting to the Node HID Server
 
 ## OSC Message Reference
 
@@ -86,13 +94,34 @@ You can download the latest release from the [GitHub Releases page](https://gith
 - **Mouse Event Dispatcher**: [Download DMG](https://github.com/ecal-mid/Logitech-ECAL/releases/latest/download/MouseOSCDispatcher-v1.0.0.dmg) | [Download ZIP](https://github.com/ecal-mid/Logitech-ECAL/releases/latest/download/MouseOSCDispatcher-v1.0.0.zip)
 - **Keyboard Event Dispatcher**: [Download DMG](https://github.com/ecal-mid/Logitech-ECAL/releases/latest/download/KeyboardOSCDispatcher-v1.0.0.dmg) | [Download ZIP](https://github.com/ecal-mid/Logitech-ECAL/releases/latest/download/KeyboardOSCDispatcher-v1.0.0.zip)
 
-> **Note**: You'll need to replace "yourusername" with your actual GitHub username and update version numbers as needed.
 
 ## Requirements
 
 - macOS 10.15 or later
 - Xcode Command Line Tools (for building Swift applications)
 - Node.js 14+ (for Node HID Server)
+
+## Helper Tools
+
+### Protokol
+
+For testing and debugging OSC and MIDI messages, we recommend using Protokol.
+
+- **Description**: Protokol is a free, cross-platform application for monitoring, testing, and debugging OSC and MIDI messages.
+- **Features**:
+  - Real-time monitoring of incoming OSC messages
+  - Visualization of message parameters
+  - Message history and filtering
+  - Send custom OSC messages for testing
+  - MIDI monitoring and testing
+  - Configurable ports and settings
+- **Download**: [Protokol Website](https://hexler.net/protokol)
+- **Usage with this project**:
+  1. Open Protokol
+  2. Set the input port to match your OSC sender (default: 8000)
+  3. Start the Mouse or Keyboard Event Dispatcher
+  4. Observe the incoming OSC messages in real-time
+
 
 ## Credits
 

@@ -31,15 +31,12 @@ cd software/Keyboard-Event-Dispatcher-UI
 ./build_all.sh
 cd ../..
 
-# Copy DMG files to release directory with version in filename
-echo "Copying DMG files to release directory..."
-cp software/Mouse-Event-Dispatcher-UI/build/release/MouseOSCDispatcher.dmg $RELEASE_DIR/MouseOSCDispatcher-v$VERSION.dmg
-cp software/Keyboard-Event-Dispatcher-UI/build/release/KeyboardOSCDispatcher.dmg $RELEASE_DIR/KeyboardOSCDispatcher-v$VERSION.dmg
-
-# Copy ZIP files to release directory with version in filename
+# Copy ZIP files to release directory with version in filename (DMG files excluded due to Apple security restrictions)
 echo "Copying ZIP files to release directory..."
 cp software/Mouse-Event-Dispatcher-UI/build/release/MouseOSCDispatcher.zip $RELEASE_DIR/MouseOSCDispatcher-v$VERSION.zip
 cp software/Keyboard-Event-Dispatcher-UI/build/release/KeyboardOSCDispatcher.zip $RELEASE_DIR/KeyboardOSCDispatcher-v$VERSION.zip
+
+# Note: DMG files are not included as they are blocked by Apple security
 
 # Create release notes template
 echo "Creating release notes template..."

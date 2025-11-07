@@ -1,30 +1,24 @@
-IMPORTANT: HOW TO OPEN MOUSE EVENT DISPATCHER ON MACOS
-==================================================
+IMPORTANT: HOW TO INSTALL KEYBOARD EVENT DISPATCHER ON MACOS
+======================================================
 
-If you see a message saying the app is damaged or can't be opened, this is due to macOS security features (Gatekeeper). Here's how to fix it:
+Due to macOS security features (Gatekeeper), you need to use our installer script to properly install the app:
 
-METHOD 1: RIGHT-CLICK TO OPEN
-----------------------------
-1. Locate the KeyboardOSCDispatcher app in Finder
-2. Right-click (or Control+click) on the app
-3. Select "Open" from the menu
-4. Click "Open" when prompted about the app being from an unidentified developer
-5. The app should now open and will be remembered as safe to open in the future
+RECOMMENDED METHOD: USE THE INSTALLER SCRIPT
+------------------------------------------
+1. Open Terminal (Applications > Utilities > Terminal)
+2. Drag and drop the 'install.sh' file from this folder into the Terminal window
+3. Press Enter to run the script
+4. Enter your password if prompted
+5. The app will be installed to your Applications folder and ready to use
 
-METHOD 2: SECURITY & PRIVACY SETTINGS
------------------------------------
-1. Try to open the app normally (it will be blocked)
-2. Open System Preferences > Security & Privacy
-3. In the General tab, look for a message about KeyboardOSCDispatcher being blocked
-4. Click "Open Anyway" next to this message
-5. Confirm by clicking "Open" in the dialog that appears
+This is the ONLY reliable method to bypass macOS security restrictions.
 
-METHOD 3: TERMINAL COMMAND (ADVANCED)
------------------------------------
+ALTERNATIVE METHODS (LESS RELIABLE)
+--------------------------------
+Manual Terminal Command
 1. Open Terminal (Applications > Utilities > Terminal)
 2. Run this command, replacing the path with the actual location of the app:
    xattr -d com.apple.quarantine /path/to/KeyboardOSCDispatcher.app
-3. Try opening the app normally
 
 ACCESSIBILITY PERMISSIONS
 ------------------------

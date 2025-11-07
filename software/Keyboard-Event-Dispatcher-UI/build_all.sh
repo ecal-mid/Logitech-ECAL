@@ -154,23 +154,23 @@ echo "APPL????" > build/release/${APP_DIR_NAME}.app/Contents/PkgInfo
 chmod +x build/release/${APP_DIR_NAME}.app/Contents/MacOS/${APP_DIR_NAME}
 touch build/release/${APP_DIR_NAME}.app/Contents/MacOS/${APP_DIR_NAME}
 
-# Create a temporary directory for DMG contents
-echo "Preparing DMG contents..."
-rm -rf build/release/dmg_contents
-mkdir -p build/release/dmg_contents
-cp -R build/release/${APP_DIR_NAME}.app build/release/dmg_contents/
+# Create a temporary directory with the app name
+echo "Preparing distribution contents..."
+rm -rf build/release/${APP_DIR_NAME}
+mkdir -p build/release/${APP_DIR_NAME}
+cp -R build/release/${APP_DIR_NAME}.app build/release/${APP_DIR_NAME}/
 
-# Copy the README file for the DMG
-echo "Copying IMPORTANT_READ_ME.txt to DMG contents..."
-cp IMPORTANT_READ_ME.txt build/release/dmg_contents/
+# Copy the README file
+echo "Copying IMPORTANT_READ_ME.txt to distribution contents..."
+cp IMPORTANT_READ_ME.txt build/release/${APP_DIR_NAME}/
 
 # Copy the install script
-echo "Copying install script to DMG contents..."
-cp install.sh build/release/dmg_contents/
-chmod +x build/release/dmg_contents/install.sh
+echo "Copying install script to distribution contents..."
+cp install.sh build/release/${APP_DIR_NAME}/
+chmod +x build/release/${APP_DIR_NAME}/install.sh
 
 # Create a helper script to remove quarantine (for backward compatibility)
-cat > build/release/dmg_contents/remove_quarantine.command << EOF
+cat > build/release/${APP_DIR_NAME}/remove_quarantine.command << EOF
 #!/bin/bash
 echo "Removing quarantine attribute from $APP_NAME..."
 xattr -d com.apple.quarantine "\$(dirname "\$0")/${APP_DIR_NAME}.app"
@@ -178,23 +178,24 @@ echo "Done! You can now run the application normally."
 echo "Press any key to close this window."
 read -n 1
 EOF
-chmod +x build/release/dmg_contents/remove_quarantine.command
+chmod +x build/release/${APP_DIR_NAME}/remove_quarantine.command
 
 # Update timestamps of copied files
-find build/release/dmg_contents -type f -exec touch {} \;
+find build/release/${APP_DIR_NAME} -type f -exec touch {} \;
 
 # Create a ZIP file (more compatible than DMG)
 echo "Creating ZIP file..."
 cd build/release
-zip -r ${APP_DIR_NAME}.zip dmg_contents/*
+zip -r ${APP_DIR_NAME}.zip ${APP_DIR_NAME}
 cd ../..
 
 # Create DMG
 echo "Creating DMG..."
-hdiutil create -volname "$APP_NAME" -srcfolder build/release/dmg_contents -ov -format UDZO build/release/${APP_DIR_NAME}.dmg
+hdiutil create -volname "$APP_NAME" -srcfolder build/release/${APP_DIR_NAME} -ov -format UDZO build/release/${APP_DIR_NAME}.dmg
 
 # Clean up temporary directory
-rm -rf build/release/dmg_contents
+echo "Cleaning up temporary directory..."
+rm -rf build/release/${APP_DIR_NAME}
 
 echo "Build completed successfully at $(date)!"
 echo "Development build: build/${APP_NAME}.app"

@@ -12,6 +12,19 @@ A macOS application with a graphical user interface that captures HID (Human Int
 - **OSC Integration**: Send blocked events via OSC to other applications
 - **Flexible OSC Settings**: Configure host, port, and control which events are sent
 
+## Installation
+
+1. Download the latest release ZIP file from the releases page
+2. Extract the ZIP file to get the MouseOSCDispatcher folder
+3. **RECOMMENDED METHOD:** Use the installer script
+   - Open Terminal (Applications > Utilities > Terminal)
+   - Drag and drop the `install.sh` file into the Terminal window
+   - Press Enter to run the script
+   - Enter your password if prompted
+4. Grant accessibility permissions when prompted after launching the app
+
+**Note:** Due to macOS security features (Gatekeeper), using the installer script is the most reliable way to install the application. See the IMPORTANT_READ_ME.txt file included with the download for more details.
+
 ## Building and Running
 
 The application is built using a single Swift file and a simple Makefile:
