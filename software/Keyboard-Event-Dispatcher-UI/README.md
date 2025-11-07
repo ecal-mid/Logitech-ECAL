@@ -14,10 +14,16 @@ A macOS application that captures keyboard events, can block them from specific 
 
 ## Installation
 
-1. Download the latest release from the releases page
-2. Mount the DMG file and drag the application to your Applications folder
-3. When first running the app, right-click on it and select "Open" to bypass Gatekeeper
-4. Grant accessibility permissions when prompted
+1. Download the latest release ZIP file from the releases page
+2. Extract the ZIP file to get the KeyboardOSCDispatcher folder
+3. **RECOMMENDED METHOD:** Use the installer script
+   - Open Terminal (Applications > Utilities > Terminal)
+   - Drag and drop the `install.sh` file into the Terminal window
+   - Press Enter to run the script
+   - Enter your password if prompted
+4. Grant accessibility permissions when prompted after launching the app
+
+**Note:** Due to macOS security features (Gatekeeper), using the installer script is the most reliable way to install the application. See the IMPORTANT_READ_ME.txt file included with the download for more details.
 
 ## Usage
 
