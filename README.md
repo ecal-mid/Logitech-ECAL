@@ -1,4 +1,4 @@
-# Logitech-ECAL HID Event Dispatchers
+# Logitech x ECAL Workshop
 
 ## About the Workshop
 
