@@ -91,8 +91,8 @@ You can download the latest release from the [GitHub Releases page](https://gith
 
 ### Latest Release
 
-- **Mouse Event Dispatcher**: [Download DMG](https://github.com/ecal-mid/Logitech-ECAL/releases/latest/download/MouseOSCDispatcher-v1.0.0.dmg) | [Download ZIP](https://github.com/ecal-mid/Logitech-ECAL/releases/latest/download/MouseOSCDispatcher-v1.0.0.zip)
-- **Keyboard Event Dispatcher**: [Download DMG](https://github.com/ecal-mid/Logitech-ECAL/releases/latest/download/KeyboardOSCDispatcher-v1.0.0.dmg) | [Download ZIP](https://github.com/ecal-mid/Logitech-ECAL/releases/latest/download/KeyboardOSCDispatcher-v1.0.0.zip)
+- **Mouse Event Dispatcher**: [Download ZIP](https://github.com/ecal-mid/Logitech-ECAL/releases/latest/download/MouseOSCDispatcher-v1.0.0.zip)
+- **Keyboard Event Dispatcher**: [Download ZIP](https://github.com/ecal-mid/Logitech-ECAL/releases/latest/download/KeyboardOSCDispatcher-v1.0.0.zip)
 
 
 ## Requirements
