@@ -1,5 +1,13 @@
 # Logitech-ECAL HID Event Dispatchers
 
+## About the Workshop
+
+This repository contains tools and examples developed for the **Workshop Logitech x ECAL** at ECAL in November 2025. The workshop is a collaborative effort between Logitech and ECAL's Media & Interaction Design BA and Industrial Design BA students.
+
+Titled **"Beyond the Desk – Students take control"** the workshop will explore alternative use and experience of logitech devices. Trough hacking the devices and using them in new ways, the students will explore new possibilities for interaction and experience.
+
+## Overview of this repository
+
 A collection of tools for capturing and dispatching HID (Human Interface Device) events via OSC (Open Sound Control) protocol.
 
 ## Components
@@ -36,7 +44,6 @@ A Node.js server that receives OSC messages and forwards them via WebSockets.
   - Forwards messages to connected WebSocket clients
   - Web interface for configuration and monitoring
   - Message filtering and logging capabilities
-
 
 ## Examples
 
@@ -84,7 +91,6 @@ The applications use the following OSC message formats for communication:
 | `/hid/key_up` | Keyboard key up | `deviceID` (int), `keyCode` (int), `characters` (string), `modifiers` (int) |
 | `/hid/flags_changed` | Modifier keys changed | `deviceID` (int), `modifiers` (int) |
 
-
 ## Download
 
 You can download the latest release from the [GitHub Releases page](https://github.com/ecal-mid/Logitech-ECAL/releases/latest).
@@ -93,7 +99,6 @@ You can download the latest release from the [GitHub Releases page](https://gith
 
 - **Mouse Event Dispatcher**: [Download ZIP](https://github.com/ecal-mid/Logitech-ECAL/releases/latest/download/MouseOSCDispatcher-v1.0.0.zip)
 - **Keyboard Event Dispatcher**: [Download ZIP](https://github.com/ecal-mid/Logitech-ECAL/releases/latest/download/KeyboardOSCDispatcher-v1.0.0.zip)
-
 
 ## Requirements
 
@@ -117,11 +122,11 @@ For testing and debugging OSC and MIDI messages, we recommend using Protokol.
   - Configurable ports and settings
 - **Download**: [Protokol Website](https://hexler.net/protokol)
 - **Usage with this project**:
-  1. Open Protokol
-  2. Set the input port to match your OSC sender (default: 8000)
-  3. Start the Mouse or Keyboard Event Dispatcher
-  4. Observe the incoming OSC messages in real-time
 
+1. Open Protokol
+2. Set the input port to match your OSC sender (default: 8000)
+3. Start the Mouse or Keyboard Event Dispatcher
+4. Observe the incoming OSC messages in real-time
 
 ## Credits
 
