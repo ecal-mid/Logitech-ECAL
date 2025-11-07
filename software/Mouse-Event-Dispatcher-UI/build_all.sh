@@ -173,7 +173,15 @@ rm -rf build/release/dmg_contents
 mkdir -p build/release/dmg_contents
 cp -R build/release/${APP_DIR_NAME}.app build/release/dmg_contents/
 cp IMPORTANT_READ_ME.txt build/release/dmg_contents/
+
+# Copy the install script
+echo "Copying install script to DMG contents..."
+cp install.sh build/release/dmg_contents/
+chmod +x build/release/dmg_contents/install.sh
+
+# Also include the legacy remove_quarantine.command for backward compatibility
 cp remove_quarantine.command build/release/dmg_contents/
+
 # Update timestamps of copied files
 find build/release/dmg_contents -type f -exec touch {} \;
 

@@ -164,7 +164,12 @@ cp -R build/release/${APP_DIR_NAME}.app build/release/dmg_contents/
 echo "Copying IMPORTANT_READ_ME.txt to DMG contents..."
 cp IMPORTANT_READ_ME.txt build/release/dmg_contents/
 
-# Create a helper script to remove quarantine
+# Copy the install script
+echo "Copying install script to DMG contents..."
+cp install.sh build/release/dmg_contents/
+chmod +x build/release/dmg_contents/install.sh
+
+# Create a helper script to remove quarantine (for backward compatibility)
 cat > build/release/dmg_contents/remove_quarantine.command << EOF
 #!/bin/bash
 echo "Removing quarantine attribute from $APP_NAME..."
