@@ -1,6 +1,6 @@
 # Keyboard Event Dispatcher
 
-![Keyboard Event Dispatcher Icon](AppIcon.png)
+<img src="AppIcon.png" width="150px" alt="Keyboard Event Dispatcher Icon">
 
 A macOS application that captures keyboard events, can block them from specific devices, and sends them via OSC protocol.
 

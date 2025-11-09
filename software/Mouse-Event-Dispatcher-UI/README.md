@@ -1,6 +1,6 @@
 # HID Event Dispatcher UI
 
-![Mouse Event Dispatcher Icon](AppIcon.png)
+<img src="AppIcon.png" width="150px" alt="Mouse Event Dispatcher Icon">
 
 A macOS application with a graphical user interface that captures HID (Human Interface Device) events, logs them with detailed information, and can optionally block them from reaching other applications. It also supports sending events via OSC (Open Sound Control) to other applications.
 
