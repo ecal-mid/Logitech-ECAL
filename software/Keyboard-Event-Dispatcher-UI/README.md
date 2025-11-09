@@ -1,6 +1,10 @@
 # Keyboard Event Dispatcher
 
+![Keyboard Event Dispatcher Icon](AppIcon.png)
+
 A macOS application that captures keyboard events, can block them from specific devices, and sends them via OSC protocol.
+
+![Keyboard Event Dispatcher Screenshot](screenshot_keyboard.png)
 
 ## Features
 
@@ -14,7 +18,7 @@ A macOS application that captures keyboard events, can block them from specific 
 
 ## Installation
 
-1. Download the latest release ZIP file from the releases page
+1. Download the latest release ZIP file from the releases page [Download ZIP](https://github.com/ecal-mid/Logitech-ECAL/releases/latest/download/KeyboardOSCDispatcher-v1.0.0.zip)
 2. Extract the ZIP file to get the KeyboardOSCDispatcher folder
 3. **RECOMMENDED METHOD:** Use the installer script
    - Open Terminal (Applications > Utilities > Terminal)

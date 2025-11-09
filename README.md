@@ -14,6 +14,8 @@ A collection of tools for capturing and dispatching HID (Human Interface Device)
 
 ### Mouse Event Dispatcher
 
+![Mouse Event Dispatcher Icon](software/Mouse-Event-Dispatcher-UI/AppIcon.png)
+
 A macOS application that captures mouse events and sends them via OSC.
 
 - Located in: `software/Mouse-Event-Dispatcher-UI/`
@@ -24,6 +26,8 @@ A macOS application that captures mouse events and sends them via OSC.
   - Accessibility permissions handling
 
 ### Keyboard Event Dispatcher
+
+![Keyboard Event Dispatcher Icon](software/Keyboard-Event-Dispatcher-UI/AppIcon.png)
 
 A macOS application that captures keyboard events and sends them via OSC.
 

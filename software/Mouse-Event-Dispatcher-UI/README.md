@@ -1,6 +1,10 @@
 # HID Event Dispatcher UI
 
+![Mouse Event Dispatcher Icon](AppIcon.png)
+
 A macOS application with a graphical user interface that captures HID (Human Interface Device) events, logs them with detailed information, and can optionally block them from reaching other applications. It also supports sending events via OSC (Open Sound Control) to other applications.
+
+![Mouse Event Dispatcher Screenshot](screenshot_mouse.png)
 
 ## Features
 
@@ -14,7 +18,7 @@ A macOS application with a graphical user interface that captures HID (Human Int
 
 ## Installation
 
-1. Download the latest release ZIP file from the releases page
+1. Download the latest release ZIP file from the releases page [Download ZIP](https://github.com/ecal-mid/Logitech-ECAL/releases/latest/download/MouseOSCDispatcher-v1.0.0.zip)
 2. Extract the ZIP file to get the MouseOSCDispatcher folder
 3. **RECOMMENDED METHOD:** Use the installer script
    - Open Terminal (Applications > Utilities > Terminal)
