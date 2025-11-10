@@ -18,7 +18,7 @@
 #include <Adafruit_NeoPixel.h>
 
 #define WIFI_SSID "ECALEVENT"
-#define WIFI_PASS "papyrus"
+#define WIFI_PASS "perpetua"
 
 // NeoPixel LED strip configuration
 #define LED_PIN 13     // Pin connected to the NeoPixel strip
