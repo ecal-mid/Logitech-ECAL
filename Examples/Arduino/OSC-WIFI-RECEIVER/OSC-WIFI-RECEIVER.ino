@@ -17,7 +17,7 @@
 #include <Preferences.h>
 
 #define WIFI_SSID "ECALEVENT" // Wifi name
-#define WIFI_PASS "papyrus"   // Wifi password
+#define WIFI_PASS "perpetua"  // Wifi password
 
 WiFiUDP Udp;                         // A UDP instance to let us send and receive packets over UDP
 IPAddress outIp(192, 168, 1, 14);    // remote IP of your computer (to send OSC messages)
