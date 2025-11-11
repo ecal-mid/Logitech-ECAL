@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sound Drops</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Sound Drops</h1>
+        <p>Create musical sequences based on physical mouse movement</p>
+      </header>
+
+      <section class="connection-panel">
+        <div class="status-indicator">
+          <div id="status-dot" class="status-dot"></div>
+          <span id="status-text">Disconnected</span>
+        </div>
+        <div class="connection-form">
+          <input
+            type="text"
+            id="server-url"
+            placeholder="WebSocket Server URL"
+            value="ws://localhost:3000"
+          />
+          <button id="connect-button" class="btn primary">Connect</button>
+          <button id="disconnect-button" class="btn secondary" disabled>
+            Disconnect
+          </button>
+        </div>
+      </section>
+
+      <section class="sound-controls">
+        <div class="section-header">
+          <h2>Sound Controls</h2>
+          <div class="controls">
+            <button id="toggle-sound" class="btn primary">
+              <span id="sound-status">Sound Off</span>
+            </button>
+            <button id="clear-sequence" class="btn secondary">
+              Clear Sequence
+            </button>
+          </div>
+        </div>
+
+        <div class="control-panels">
+          <div class="control-panel">
+            <h3>Sound Settings</h3>
+            <div class="control-row">
+              <label>Note Volume</label>
+              <input
+                type="range"
+                id="note-volume"
+                min="0"
+                max="100"
+                value="70"
+              />
+              <span id="note-volume-value">70%</span>
+            </div>
+            <div class="control-row">
+              <label>Movement Scaling</label>
+              <input
+                type="range"
+                id="trigger-distance"
+                min="1"
+                max="20"
+                value="5"
+              />
+              <span id="trigger-distance-value">5x</span>
+            </div>
+            <div class="control-row">
+              <label>Replay Tolerance</label>
+              <input
+                type="range"
+                id="replay-tolerance"
+                min="1"
+                max="30"
+                value="5"
+              />
+              <span id="replay-tolerance-value">5</span>
+            </div>
+          </div>
+
+          <div class="control-panel">
+            <h3>Sound Style</h3>
+            <div class="control-row">
+              <label>Musical Scale</label>
+              <select id="musical-scale">
+                <option value="pentatonicScale">Pentatonic (C D E G A)</option>
+                <option value="majorScale">Major (C D E F G A B)</option>
+                <option value="minorScale">Minor (C D Eb F G Ab Bb)</option>
+              </select>
+            </div>
+            <div class="control-row">
+              <label>Base Frequency</label>
+              <input
+                type="range"
+                id="base-frequency"
+                min="100"
+                max="1000"
+                value="220"
+              />
+              <span id="base-frequency-value">220 Hz</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="notes-section">
+        <div class="section-header">
+          <h2>Movement Notes</h2>
+          <div class="sequence-info">
+            <span id="sequence-status">No sequence started</span>
+            <span id="notes-count">0 notes</span>
+          </div>
+        </div>
+        <div class="current-position-display">
+          <div class="position-label">Current Position:</div>
+          <div id="current-position" class="position-value">(0, 0)</div>
+          <div class="position-hint">relative to starting point</div>
+        </div>
+        <div class="notes-container">
+          <div class="notes-header">
+            <div class="note-id">ID</div>
+            <div class="note-position">Position (relative to start)</div>
+            <div class="note-frequency">Frequency</div>
+            <div class="note-status">Status</div>
+          </div>
+          <div id="notes-list" class="notes-list">
+            <div class="empty-state">
+              No notes yet. Right-click to start a sequence and drop notes.
+            </div>
+          </div>
+          <div class="notes-instructions">
+            <p>
+              <strong>This is a physical-space musical instrument.</strong>
+              Right-click to start a sequence and drop notes based on your mouse
+              movement. Notes are placed and triggered based on physical
+              movement patterns, not screen position.
+            </p>
+            <p>
+              You can create and replay notes without looking at the screen -
+              just focus on the movement of your mouse on the desk.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="log-section">
+        <div class="log-header">
+          <h2>System Log</h2>
+          <div class="log-controls">
+            <button id="clear-log" class="btn secondary">Clear Log</button>
+          </div>
+        </div>
+        <div id="message-log" class="message-log"></div>
+      </section>
+    </div>
+
+    <!-- Load Tone.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
