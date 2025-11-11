@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Distance-Based Notes</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Distance-Based Notes</h1>
+        <p>
+          Create musical sequences with manual note placement based on movement
+          distances
+        </p>
+      </header>
+
+      <section class="connection-panel">
+        <div class="status-indicator">
+          <div id="status-dot" class="status-dot"></div>
+          <span id="status-text">Disconnected</span>
+        </div>
+        <div class="connection-form">
+          <input
+            type="text"
+            id="server-url"
+            placeholder="WebSocket Server URL"
+            value="ws://localhost:3000"
+          />
+          <button id="connect-button" class="btn primary">Connect</button>
+          <button id="disconnect-button" class="btn secondary" disabled>
+            Disconnect
+          </button>
+        </div>
+      </section>
+
+      <section class="sound-controls">
+        <div class="section-header">
+          <h2>Sound Controls</h2>
+          <div class="controls">
+            <button id="toggle-sound" class="btn primary">
+              <span id="sound-status">Sound Off</span>
+            </button>
+            <button id="clear-sequence" class="btn secondary">
+              Clear Sequence
+            </button>
+          </div>
+        </div>
+
+        <div class="control-panels">
+          <div class="control-panel">
+            <h3>Sound Settings</h3>
+            <div class="control-row">
+              <label>Note Volume</label>
+              <input
+                type="range"
+                id="note-volume"
+                min="0"
+                max="100"
+                value="70"
+              />
+              <span id="note-volume-value">70%</span>
+            </div>
+            <div class="control-row">
+              <label>Distance Threshold</label>
+              <input
+                type="range"
+                id="distance-threshold"
+                min="5"
+                max="100"
+                value="20"
+              />
+              <span id="distance-threshold-value">20 units</span>
+            </div>
+            <div class="control-row">
+              <label>Replay Tolerance</label>
+              <input
+                type="range"
+                id="replay-tolerance"
+                min="1"
+                max="30"
+                value="5"
+              />
+              <span id="replay-tolerance-value">5</span>
+            </div>
+          </div>
+
+          <div class="control-panel">
+            <h3>Sound Style</h3>
+            <div class="control-row">
+              <label>Musical Scale</label>
+              <select id="musical-scale">
+                <option value="pentatonicScale">Pentatonic (C D E G A)</option>
+                <option value="majorScale">Major (C D E F G A B)</option>
+                <option value="minorScale">Minor (C D Eb F G Ab Bb)</option>
+              </select>
+            </div>
+            <div class="control-row">
+              <label>Base Frequency</label>
+              <input
+                type="range"
+                id="base-frequency"
+                min="100"
+                max="1000"
+                value="220"
+              />
+              <span id="base-frequency-value">220 Hz</span>
+            </div>
+            <div class="control-row">
+              <label>Pitch Increment</label>
+              <input
+                type="range"
+                id="frequency-factor"
+                min="0"
+                max="10"
+                value="2"
+                step="0.1"
+              />
+              <span id="frequency-factor-value">0.002</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="notes-section">
+        <div class="section-header">
+          <h2>Movement Notes</h2>
+          <div class="sequence-info">
+            <span id="sequence-status">No sequence started</span>
+            <span id="notes-count">0 notes</span>
+          </div>
+        </div>
+        <div class="current-distance-display">
+          <div class="distance-label">Current Distance:</div>
+          <div id="current-distance" class="distance-value">0.00 units</div>
+          <div class="distance-hint">since last movement</div>
+        </div>
+        <div class="total-distance-display">
+          <div class="distance-label">Total Distance:</div>
+          <div id="total-distance" class="distance-value">0.00 units</div>
+          <div class="distance-hint">since sequence start</div>
+        </div>
+        <div class="notes-container">
+          <div class="notes-header">
+            <div class="note-id">ID</div>
+            <div class="note-distance">Distance</div>
+            <div class="note-frequency">Frequency</div>
+            <div class="note-status">Status</div>
+          </div>
+          <div id="notes-list" class="notes-list">
+            <div class="empty-state">
+              No notes yet. Right-click to start a sequence and move to drop
+              notes.
+            </div>
+          </div>
+          <div class="notes-instructions">
+            <p><strong>This is a distance-based musical instrument with simple controls:</strong></p>
+            <ol>
+              <li><strong>Start Recording:</strong> Right-click to start recording mode</li>
+              <li><strong>Drop Notes:</strong> Left-click to manually place notes as you move</li>
+              <li><strong>Play Mode:</strong> Right-click to reset distance and enter playback mode</li>
+            </ol>
+            <p><strong>Additional Controls:</strong></p>
+            <ul>
+              <li><strong>Long Left Press:</strong> Reset sequence and start new recording (clears all notes)</li>
+              <li><strong>Right-click + drag:</strong> Restart the sequence (resets total distance to 0 without clearing notes)</li>
+            </ul>
+            <p>Notes are saved with their distance from the start and replay when you pass through similar distances in playback mode.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="log-section">
+        <div class="log-header">
+          <h2>System Log</h2>
+          <div class="log-controls">
+            <button id="clear-log" class="btn secondary">Clear Log</button>
+          </div>
+        </div>
+        <div class="log-container">
+          <div id="message-log" class="message-log"></div>
+        </div>
+      </section>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
