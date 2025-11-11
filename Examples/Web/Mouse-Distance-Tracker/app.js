@@ -290,7 +290,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Conversion factor: 6660 pixels = 300mm
-  const PIXELS_TO_MM = 300 / 6660;
+  // take one mesure and calibrate it with a ruler mm/px
+  const PIXELS_TO_MM = 297 / 7751;
 
   // Add measurement as a card
   function addMeasurementToLog(timestamp, distance) {

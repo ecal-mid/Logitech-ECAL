@@ -23,7 +23,7 @@ const CONFIG_FILE = path.join(__dirname, 'config.json');
 let config = {
   oscPort: 8000,
   webSocketPort: 8080,
-  webServerPort: 3001,
+  webServerPort: 3000,
   enabled: false,
   filters: {
     enabled: false,
