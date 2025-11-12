@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scroll Distance Tracker</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Micrology</h1>
+      </header>
+
+      <section class="connection-panel">
+        <div class="status-indicator">
+          <div id="status-dot" class="status-dot"></div>
+          <span id="status-text">Disconnected</span>
+        </div>
+        <div class="connection-form">
+          <input
+            type="text"
+            id="server-url"
+            placeholder="WebSocket Server URL"
+            value="ws://localhost:3000"
+          />
+          <button id="connect-button" class="btn primary">Connect</button>
+          <button id="disconnect-button" class="btn secondary" disabled>
+            Disconnect
+          </button>
+        </div>
+      </section>
+
+      <section class="scroll-visualization">
+        <div class="section-header">
+          <h2>Scroll Visualization</h2>
+        </div>
+        <div class="visualization-container">
+          <div class="scroll-indicator">
+            <div class="scroll-direction">
+              <div id="scroll-up" class="direction-indicator">▲</div>
+              <div id="scroll-down" class="direction-indicator">▼</div>
+            </div>
+            <div class="scroll-bar-container">
+              <div id="scroll-bar" class="scroll-bar"></div>
+            </div>
+          </div>
+          <div class="scroll-stats">
+            <div class="stat-item">
+              <span class="stat-label">Current Delta:</span>
+              <span id="current-delta" class="stat-value">0</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Total Distance:</span>
+              <span id="total-distance" class="stat-value">0 units</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Total Distance:</span>
+              <span id="total-mm" class="stat-value">0.000 m (0.00 mm)</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="measurements-section">
+        <div class="section-header">
+          <h2>Scroll Measurements</h2>
+          <div class="controls">
+            <button id="export-measurements" class="btn primary">
+              Export CSV
+            </button>
+            <button id="clear-measurements" class="btn secondary">
+              Clear All
+            </button>
+          </div>
+        </div>
+
+        <div id="measurements-container" class="measurements-container">
+          <!-- Measurement cards will be added here dynamically -->
+          <div class="empty-state" id="empty-state">
+            <p>No measurements recorded yet.</p>
+            <p>Scroll your mouse wheel to start measuring distances.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="log-section">
+        <div class="log-header">
+          <h2>System Log</h2>
+          <div class="log-controls">
+            <button id="clear-log" class="btn secondary">Clear Log</button>
+          </div>
+        </div>
+        <div id="message-log" class="message-log"></div>
+      </section>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

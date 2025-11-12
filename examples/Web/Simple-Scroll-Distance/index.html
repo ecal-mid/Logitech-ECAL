@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Scroll Distance</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Micrology</h1>
+      </header>
+
+      <section class="distance-display">
+        <div class="distance-container">
+          <div class="distance-value">
+            <span class="value-label">Total Distance:</span>
+            <span id="total-distance" class="value">0 units</span>
+          </div>
+          <div class="distance-value">
+            <span class="value-label">Physical Distance:</span>
+            <span id="total-physical" class="value">0.000 m (0.00 mm)</span>
+          </div>
+          <button id="reset-button" class="btn primary">Reset Distance</button>
+        </div>
+      </section>
+
+      <!-- Scroll visualization removed for simplicity -->
+      <section class="connection-panel">
+        <div class="status-indicator">
+          <div id="status-dot" class="status-dot"></div>
+          <span id="status-text">Disconnected</span>
+        </div>
+      </section>
+      <div class="connection-form">
+        <input
+          type="text"
+          id="server-url"
+          placeholder="WebSocket Server URL"
+          value="ws://localhost:3000"
+        />
+        <button id="connect-button" class="btn primary">Connect</button>
+        <button id="disconnect-button" class="btn secondary" disabled>
+          Disconnect
+        </button>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

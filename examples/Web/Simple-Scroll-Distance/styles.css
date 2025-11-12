@@ -1,0 +1,185 @@
+:root {
+  --primary-color: #2563eb;
+  --primary-hover: #1d4ed8;
+  --secondary-color: #64748b;
+  --secondary-hover: #475569;
+  --success-color: #10b981;
+  --danger-color: #ef4444;
+  --warning-color: #f59e0b;
+  --background-color: #f8fafc;
+  --card-background: #ffffff;
+  --text-color: #1e293b;
+  --border-color: #e2e8f0;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+header p {
+  color: var(--secondary-color);
+  font-size: 1.1rem;
+}
+
+.connection-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--card-background);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+}
+
+.status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--danger-color);
+  margin-right: 8px;
+}
+
+.status-dot.connected {
+  background-color: var(--success-color);
+}
+
+.connection-form {
+  display: flex;
+  gap: 8px;
+}
+
+.connection-form input {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  width: 250px;
+}
+
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.primary:hover:not(:disabled) {
+  background-color: var(--primary-hover);
+}
+
+.secondary {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.secondary:hover:not(:disabled) {
+  background-color: var(--secondary-hover);
+}
+
+/* Distance Display */
+.distance-display {
+  background-color: var(--card-background);
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.distance-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.distance-value {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.value-label {
+  font-size: 1.2rem;
+  color: var(--secondary-color);
+  font-weight: 500;
+}
+
+.value {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  font-family: monospace;
+}
+
+#reset-button {
+  margin-top: 1rem;
+  padding: 10px 20px;
+  font-size: 1rem;
+}
+
+/* Scroll Visualization removed for simplicity */
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .connection-panel {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .connection-form {
+    width: 100%;
+  }
+  
+  .connection-form input {
+    flex-grow: 1;
+  }
+  
+  .value {
+    font-size: 2rem;
+  }
+}
